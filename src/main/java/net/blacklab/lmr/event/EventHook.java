@@ -18,6 +18,11 @@ public class EventHook {
 	@SubscribeEvent
 	public void onEntityInteract(EntityInteractEvent event) {
 		if (event.target instanceof LMM_EntityLittleMaid) {
+			LMM_EntityLittleMaid lMaid = (LMM_EntityLittleMaid) event.target;
+			if (!lMaid.isContract()) {
+				return;
+			}
+
 			if (lastInteractEntity == null) {
 				// 1回目
 				event.entityPlayer.addChatComponentMessage(new ChatComponentText(
@@ -30,7 +35,6 @@ public class EventHook {
 				lastInteractTick = lastInteractEntity.ticksExisted;
 			} else if (event.target == lastInteractEntity && event.target.ticksExisted-lastInteractTick < 20*30) {
 				// 2回目
-				LMM_EntityLittleMaid lMaid = (LMM_EntityLittleMaid) event.target;
 				
 				ItemStack stack = new ItemStack(LittleMaidReengaged.maidPorter);
 
