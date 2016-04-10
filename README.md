@@ -15,4 +15,13 @@ Littlemaid on "Reengaged" does not have compatibility with ones on "NX". This MO
 2. Right-click maid. You will read cautions on chat log.
 3. Right-click maid again. Then the maid is caught to an "Maid Porter" item and it is put in player's inventory or dropped(if the inventory is full).
 4. Open the world under an environment in which "Reengaged" is installed.
-5. Right-click anywhere with "Porter". The caught maid will be summoned.
+5. A warning which tells missing items will be shown, click 'Yes' then continue.
+6. Right-click any block(requires 2-block space above it) with "Porter". The caught maid will be summoned.
+
+## What will be ported?
+
+* Maid's name
+* Maid's experience
+* Maid's models
+* Maid's color
+* Maid's inventory
