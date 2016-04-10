@@ -21,7 +21,7 @@ public class EventHook {
 	public void onEntityInteract(EntityInteractEvent event) {
 		if (!event.target.worldObj.isRemote && !event.target.isDead && event.target instanceof LMM_EntityLittleMaid) {
 			LMM_EntityLittleMaid lMaid = (LMM_EntityLittleMaid) event.target;
-			if (!lMaid.isContract()) {
+			if (!lMaid.isContract() || lMaid.getMaidMasterEntity() != event.entityPlayer) {
 				return;
 			}
 
