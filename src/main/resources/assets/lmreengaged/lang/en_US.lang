@@ -1,0 +1,4 @@
+net.blacklab.lmr.text.port.caution.0=*CAUTION*
+net.blacklab.lmr.text.port.caution.1=Caught maid cannot summoned again on LMMNX!
+net.blacklab.lmr.text.port.caution.2=If you want to continue, re-interact the maid.
+net.blacklab.lmr.text.port.caution.3=If you want to abort, exit from world or wait for 10 seconds!

@@ -7,33 +7,42 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHook {
-	private int lastInteractTick = 0;
+	private long lastInteractTime = 0;
 	private Entity lastInteractEntity;
 
 	@SubscribeEvent
 	public void onEntityInteract(EntityInteractEvent event) {
-		if (!event.target.worldObj.isRemote && event.target instanceof LMM_EntityLittleMaid) {
+		if (!event.target.worldObj.isRemote && !event.target.isDead && event.target instanceof LMM_EntityLittleMaid) {
 			LMM_EntityLittleMaid lMaid = (LMM_EntityLittleMaid) event.target;
 			if (!lMaid.isContract()) {
 				return;
 			}
 
-			if (lastInteractEntity == null) {
+			if (lastInteractEntity == null || event.target != lastInteractEntity) {
 				// 1回目
+				ChatStyle redColorStyle = new ChatStyle().setColor(EnumChatFormatting.RED);
 				event.entityPlayer.addChatComponentMessage(new ChatComponentText(
-						StatCollector.translateToLocal("net.blacklab.lmr.text.port.caution.0")));
+						StatCollector.translateToLocal("net.blacklab.lmr.text.port.caution.0")).setChatStyle(redColorStyle));
 				event.entityPlayer.addChatComponentMessage(new ChatComponentText(
-						StatCollector.translateToLocal("net.blacklab.lmr.text.port.caution.1")));
+						StatCollector.translateToLocal("net.blacklab.lmr.text.port.caution.1")).setChatStyle(redColorStyle));
 				event.entityPlayer.addChatComponentMessage(new ChatComponentText(
-						StatCollector.translateToLocal("net.blacklab.lmr.text.port.caution.2")));
+						StatCollector.translateToLocal("net.blacklab.lmr.text.port.caution.2")).setChatStyle(redColorStyle));
+				event.entityPlayer.addChatComponentMessage(new ChatComponentText(
+						StatCollector.translateToLocal("net.blacklab.lmr.text.port.caution.3")).setChatStyle(redColorStyle));
 				lastInteractEntity = event.target;
-				lastInteractTick = lastInteractEntity.ticksExisted;
-			} else if (event.target == lastInteractEntity && event.target.ticksExisted-lastInteractTick < 20*30) {
+				lastInteractTime = System.currentTimeMillis();
+			} else if (event.target == lastInteractEntity) {
+				if (System.currentTimeMillis()-lastInteractTime >= 10*1000) {
+					lastInteractEntity = null;
+					return;
+				}
 				// 2回目
 				ItemStack stack = new ItemStack(LittleMaidReengaged.maidPorter);
 
