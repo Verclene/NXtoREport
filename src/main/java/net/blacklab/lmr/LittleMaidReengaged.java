@@ -1,7 +1,10 @@
 package net.blacklab.lmr;
 
+import net.blacklab.lmr.event.EventHook;
 import net.blacklab.lmr.item.ItemMaidPorter;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -20,5 +23,7 @@ public class LittleMaidReengaged {
 	public void preInit(FMLPreInitializationEvent event) {
 		maidPorter = new ItemMaidPorter();
 		GameRegistry.registerItem(maidPorter, "maidporter");
+		
+		MinecraftForge.EVENT_BUS.register(new EventHook());
 	}
 }

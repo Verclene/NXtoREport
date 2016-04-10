@@ -17,7 +17,7 @@ public class EventHook {
 
 	@SubscribeEvent
 	public void onEntityInteract(EntityInteractEvent event) {
-		if (event.target instanceof LMM_EntityLittleMaid) {
+		if (!event.target.worldObj.isRemote && event.target instanceof LMM_EntityLittleMaid) {
 			LMM_EntityLittleMaid lMaid = (LMM_EntityLittleMaid) event.target;
 			if (!lMaid.isContract()) {
 				return;
@@ -35,7 +35,6 @@ public class EventHook {
 				lastInteractTick = lastInteractEntity.ticksExisted;
 			} else if (event.target == lastInteractEntity && event.target.ticksExisted-lastInteractTick < 20*30) {
 				// 2回目
-				
 				ItemStack stack = new ItemStack(LittleMaidReengaged.maidPorter);
 
 				// 保存用タグ
