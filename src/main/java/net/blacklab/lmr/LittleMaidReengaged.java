@@ -2,7 +2,11 @@ package net.blacklab.lmr;
 
 import net.blacklab.lmr.event.EventHook;
 import net.blacklab.lmr.item.ItemMaidPorter;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -21,8 +25,15 @@ public class LittleMaidReengaged {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		// Register item
 		maidPorter = new ItemMaidPorter();
 		GameRegistry.registerItem(maidPorter, "maidporter");
+		// Register model
+		if (event.getSide().isClient()) {
+			ModelLoader.addVariantName(maidPorter, DOMAIN + ":maidporter_0", DOMAIN + ":maidporter_1");
+			ModelLoader.setCustomModelResourceLocation(maidPorter, 0, new ModelResourceLocation(DOMAIN + ":maidporter_0", "inventory"));
+			ModelLoader.setCustomModelResourceLocation(maidPorter, 1, new ModelResourceLocation(DOMAIN + ":maidporter_1", "inventory"));
+		}
 		
 		MinecraftForge.EVENT_BUS.register(new EventHook());
 	}

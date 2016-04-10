@@ -45,6 +45,7 @@ public class EventHook {
 				}
 				// 2回目
 				ItemStack stack = new ItemStack(LittleMaidReengaged.maidPorter);
+				stack.setItemDamage(1);
 
 				// 保存用タグ
 				NBTTagCompound tagCompound = new NBTTagCompound();
